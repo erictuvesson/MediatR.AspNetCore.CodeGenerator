@@ -37,7 +37,7 @@ namespace MediatR.AspNetCore.CodeGenerator.CLI.Analyzers.Objects
         /// <summary>
         /// Gets the request full return type.
         /// </summary>
-        public string FullReturnType => CalcFullReturnType();
+        public string FullReturnType => this.Syntax.ReturnType.Type.ToString();
 
         /// <summary>
         /// Gets the request return type.
@@ -61,14 +61,6 @@ namespace MediatR.AspNetCore.CodeGenerator.CLI.Analyzers.Objects
 
             this.Syntax.Meta.TryGetValue("GroupName", out var groupName);
             this.GroupName = groupName ?? DefaultGroupName;
-        }
-
-        public string CalcFullReturnType()
-        {
-            if (ReturnType == "bool")
-                return "bool";
-
-            return $"{ReturnNamespace}.{ReturnType}";
         }
 
         public override string ToString()

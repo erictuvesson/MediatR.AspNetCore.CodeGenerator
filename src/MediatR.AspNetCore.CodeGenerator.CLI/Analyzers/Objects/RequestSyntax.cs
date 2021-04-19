@@ -25,6 +25,11 @@ namespace MediatR.AspNetCore.CodeGenerator.CLI.Analyzers.Objects
         public TypeSyntax ReturnTypeSyntax { get; }
 
         /// <summary>
+        /// Gets the request return type info.
+        /// </summary>
+        public TypeInfo ReturnType { get; }
+
+        /// <summary>
         /// Gets the request namespace.
         /// </summary>
         public NamespaceDeclarationSyntax NamespaceSyntax { get; }
@@ -46,6 +51,8 @@ namespace MediatR.AspNetCore.CodeGenerator.CLI.Analyzers.Objects
             this.NamespaceSyntax = GetRelativeNamespaceSyntax(this.Syntax);
 
             var semanticModel = compilation.GetSemanticModel(this.NamespaceSyntax?.SyntaxTree ?? syntax.SyntaxTree);
+            
+            this.ReturnType = semanticModel.GetTypeInfo(this.ReturnTypeSyntax);
             this.ReturnTypeNamespaceSyntax = GetNamespace(this.ReturnTypeSyntax, semanticModel);
 
             if (this.Syntax.AttributeLists.Count > 0)
